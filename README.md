@@ -1,4 +1,5 @@
-# GABBLE
+### GABBLE :skull: is a terrible name
+# BBS2k17!
 ## Use Express and Sequelize to build a social network
 
 Use Express and Sequelize to build a social network for students. This network, called "Gabble," has users, public messages, and likes.
@@ -29,6 +30,7 @@ This will require your knowledge of forms, validation, sessions, middleware, and
 
 You may want to consider running
 ```bash
-sequelize seed:create```
+sequelize seed:create
+```
 
 and create a new seed file that will create several users and gabs.
