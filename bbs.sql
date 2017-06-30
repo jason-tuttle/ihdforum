@@ -81,7 +81,7 @@ ALTER SEQUENCE likes_id_seq OWNED BY likes.id;
 
 CREATE TABLE messages (
     id integer NOT NULL,
-    message character varying(255),
+    message character varying(140) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
     "userId" integer NOT NULL
@@ -113,9 +113,9 @@ ALTER SEQUENCE messages_id_seq OWNED BY messages.id;
 
 CREATE TABLE users (
     id integer NOT NULL,
-    username character varying(255),
-    password character varying(255),
-    displayname character varying(255),
+    username character varying(255) NOT NULL,
+    password character varying(255) NOT NULL,
+    displayname character varying(255) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL,
     "messageId" integer NOT NULL
