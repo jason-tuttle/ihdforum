@@ -14,6 +14,41 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+SET search_path = public, pg_catalog;
+
+ALTER TABLE ONLY public.messages DROP CONSTRAINT "messages_userId_fkey";
+ALTER TABLE ONLY public.likes DROP CONSTRAINT "likes_userId_fkey";
+ALTER TABLE ONLY public.likes DROP CONSTRAINT "likes_messageId_fkey";
+ALTER TABLE ONLY public.users DROP CONSTRAINT users_pkey;
+ALTER TABLE ONLY public.messages DROP CONSTRAINT messages_pkey;
+ALTER TABLE ONLY public.likes DROP CONSTRAINT likes_pkey;
+ALTER TABLE ONLY public."SequelizeMeta" DROP CONSTRAINT "SequelizeMeta_pkey";
+ALTER TABLE public.users ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.messages ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.likes ALTER COLUMN id DROP DEFAULT;
+DROP SEQUENCE public.users_id_seq;
+DROP TABLE public.users;
+DROP SEQUENCE public.messages_id_seq;
+DROP TABLE public.messages;
+DROP SEQUENCE public.likes_id_seq;
+DROP TABLE public.likes;
+DROP TABLE public."SequelizeMeta";
+DROP EXTENSION plpgsql;
+DROP SCHEMA public;
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+CREATE SCHEMA public;
+
+
+--
+-- Name: SCHEMA public; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON SCHEMA public IS 'standard public schema';
+
+
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
 --
@@ -49,8 +84,8 @@ CREATE TABLE "SequelizeMeta" (
 
 CREATE TABLE likes (
     id integer NOT NULL,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+    "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
     "userId" integer NOT NULL,
     "messageId" integer NOT NULL
 );
@@ -82,8 +117,8 @@ ALTER SEQUENCE likes_id_seq OWNED BY likes.id;
 CREATE TABLE messages (
     id integer NOT NULL,
     message character varying(140) NOT NULL,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
+    "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+    "updatedAt" timestamp with time zone DEFAULT now() NOT NULL,
     "userId" integer NOT NULL
 );
 
@@ -116,9 +151,8 @@ CREATE TABLE users (
     username character varying(255) NOT NULL,
     password character varying(255) NOT NULL,
     displayname character varying(255) NOT NULL,
-    "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL,
-    "messageId" integer NOT NULL
+    "createdAt" timestamp with time zone DEFAULT now() NOT NULL,
+    "updatedAt" timestamp with time zone DEFAULT now() NOT NULL
 );
 
 
@@ -219,11 +253,10 @@ ALTER TABLE ONLY messages
 
 
 --
--- Name: users users_messageId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: public; Type: ACL; Schema: -; Owner: -
 --
 
-ALTER TABLE ONLY users
-    ADD CONSTRAINT "users_messageId_fkey" FOREIGN KEY ("messageId") REFERENCES messages(id);
+GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
 --
