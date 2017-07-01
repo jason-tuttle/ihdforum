@@ -2,6 +2,7 @@ const express = require('express');
 const bbsRouter = require('./routes/bbsRouter');
 const mustacheExpress = require('mustache-express');
 const session = require('express-session');
+const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
 const app = express();
 
@@ -10,6 +11,7 @@ app.set('views', './views');
 app.set('view engine', 'mustache');
 
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(expressValidator());
 
 app.use(session({
   secret: 'ford prefect',
@@ -21,7 +23,7 @@ app.use(function(req, res, next) {
   if (!req.session.active) {
     req.session.active = true;
     req.session.loggedIn = false;
-    req.session.user = "";
+    req.session.user = {};
     console.log(req.session);
   }
   next();

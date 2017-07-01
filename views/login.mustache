@@ -13,7 +13,16 @@
     <input type="text" id="username" name="username" value="" placeholder="username" autofocus><br>
     <label for="password">password:</label>
     <input type="password" id="password" name="password" value=""><br>
-    <button type="submit" form="loginform" name="button">Log In</button>
+    <button type="submit" form="loginform" name="button" value="login">Log In</button>
   </form>
+
+  <div class="error-message">
+    {{#error}}
+      {{msg}}
+      {{^loggedIn}}
+        <button form="loginform" type="submit" name="button" value="signup">Sign Up!</button>
+      {{/loggedIn}}
+    {{/error}}
+  </div>
 </body>
 </html>
