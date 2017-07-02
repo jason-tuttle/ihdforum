@@ -17,7 +17,7 @@ router.get('/', function(req, res) {
         }
       ]
     }).then(function(msgs) {
-      res.render('index', { messages: msgs });
+      res.render('index', { messages: msgs, user: req.session.user });
     });
   } else {
     res.redirect('/login');

@@ -30,7 +30,7 @@ router.post('/signup', function(req, res) {
             }).then(function(user) {
               console.log(user);
               req.session.loggedIn = true;
-              req.session.user = displayname;
+              req.session.user = {name: username, id: user.id};
               res.redirect('/');
             });
           }
