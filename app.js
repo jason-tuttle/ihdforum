@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bbsRouter = require('./routes/bbsRouter');
 const mustacheExpress = require('mustache-express');
 const session = require('express-session');
@@ -13,6 +14,7 @@ app.set('view engine', 'mustache');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(expressValidator());
+app.use('/resources', express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: 'ford prefect',

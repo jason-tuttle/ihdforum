@@ -1,4 +1,42 @@
 body {
   margin: 0;
-  padding: 0;
+  padding: 1vh 1vw;
+  background-color: darkgray;
+  color: white;
+  font-family: monospace;
+}
+
+a:link {
+  color: darkgreen;
+}
+
+header {
+  display: flex;
+  flex-flow: row nowrap;
+}
+.header {
+  margin: 0 5px;
+  flex:auto;
+}
+/*.messages-container {}*/
+
+.messages-container p {
+  margin: 0;
+}
+.msg-container {
+  display: flex;
+  flex-flow: row wrap;
+  border-bottom: 2px solid green;
+}
+.msg-body {
+  flex: 1 0 100%;
+  background-color: white;
+  color: black;
+  padding: 10px 0;
+}
+.msg-attr {
+  flex:1 1 100%;
+  background-color: lightgray;
+  color: black;
+  border-top: 1px dashed green;
 }

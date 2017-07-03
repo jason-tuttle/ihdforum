@@ -9,16 +9,20 @@
   </head>
   <body>
     <header>
-      <div class="">bbs2k17!</div>
-      <div class=""><a href="/compose">create a new message</a></div>
-      <div class="">logged in as {{user.name}}</div>
-      {{#loggedIn}}<div class=""><a href="/logout">log out</a></div>{{/loggedIn}}
+      <div class="header">bbs2k17!</div>
+      <div class="header"><a href="/compose">create a new message</a></div>
+      <div class="header">logged in as {{user.name}}</div>
+      {{#loggedIn}}<div class="header"><a href="/logout">log out</a></div>{{/loggedIn}}
     </header>
-    {{#messages}}
-      <p class="msg-body">{{message}}</p>
-      <p class="msg-attr auth">Written by: {{user.displayname}}</p>
-      <p class="msg-attr date">{{createdAt}}</p>
-      <p class="msg-attr likes">{{likes.length}} likes so far</p>
-    {{/messages}}
+    <div class="messages-container">
+      {{#messages}}
+        <div class="msg-container">
+          <p class="msg-body">{{message}}</p>
+          <p class="msg-attr auth">Written by: {{user.displayname}}</p>
+          <p class="msg-attr date">{{createdAt}}</p>
+          <p class="msg-attr likes">{{likes.length}} likes so far</p>
+        </div>
+      {{/messages}}
+    </div>
   </body>
 </html>
