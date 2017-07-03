@@ -24,7 +24,7 @@ app.use(function(req, res, next) {
     req.session.active = true;
     req.session.loggedIn = false;
     req.session.user = {};
-    console.log(req.session);
+    // console.log(req.session);
   }
   next();
 });
@@ -32,4 +32,4 @@ app.use(function(req, res, next) {
 app.use('/', bbsRouter);
 
 
-app.listen(3000, function() { console.log("Cannonball runnin'"); });
+app.listen(3000, function() { console.log("Cannonball runnin' at 3000"); });

@@ -8,9 +8,20 @@
     <link rel="stylesheet" href="/static/styles.css">
   </head>
   <body>
+    <header>
+      <div class="">bbs2k17!</div>
+      <div class=""><a href="/compose">create a new message</a></div>
+      <div class="">logged in as {{user.name}}</div>
+      {{#loggedIn}}<div class="">log out</div>{{/loggedIn}}
+    </header>
     <form class="message-form" id="new-message" action="/compose" method="post">
       <input type="textarea" name="messageBody" value="" placeholder="What are we talking about?" autofocus><br>
       <button type="submit" form="new-message" name="button">Post</button>
     </form>
+    <div class="error-message">
+      {{#error}}
+        {{msg}}
+      {{/error}}
+    </div>
   </body>
 </html>
