@@ -12,12 +12,13 @@
       <div class="">bbs2k17!</div>
       <div class=""><a href="/compose">create a new message</a></div>
       <div class="">logged in as {{user.name}}</div>
-      {{#loggedIn}}<div class="">log out</div>{{/loggedIn}}
+      {{#loggedIn}}<div class=""><a href="/logout">log out</a></div>{{/loggedIn}}
     </header>
     {{#messages}}
-      <p>{{message}}</p>
-      <p>Written by: {{user.displayname}}</p>
-      <p>{{likes.length}} likes so far</p>
+      <p class="msg-body">{{message}}</p>
+      <p class="msg-attr auth">Written by: {{user.displayname}}</p>
+      <p class="msg-attr date">{{createdAt}}</p>
+      <p class="msg-attr likes">{{likes.length}} likes so far</p>
     {{/messages}}
   </body>
 </html>

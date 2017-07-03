@@ -6,12 +6,12 @@ const signupApp = express();
 const router = express.Router();
 
 router.get('/signup', function(req, res) {
-  res.render('signup', {});
+  res.render('signup', {user: req.session.user});
 });
 
 // handle form submission
 router.post('/signup', function(req, res) {
-  console.log(req.body);
+  // console.log(req.body);
   const { displayname, username, password } = req.body; // store the values passed in
   req.checkBody('displayname', 'please enter a displayname').notEmpty();
   req.checkBody('username', 'please enter a username').notEmpty();
@@ -36,7 +36,7 @@ router.post('/signup', function(req, res) {
           }
         });
     } else {
-      console.log(result.array());
+      // console.log(result.array());
       res.render('signup', {error: result.array()[0]});
     }
   });

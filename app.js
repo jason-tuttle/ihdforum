@@ -4,6 +4,7 @@ const mustacheExpress = require('mustache-express');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
+var Sequelize = require('sequelize');
 const app = express();
 
 app.engine('mustache', mustacheExpress());
@@ -30,6 +31,11 @@ app.use(function(req, res, next) {
 });
 
 app.use('/', bbsRouter);
+
+app.get('/logout', function(req, res) {
+  req.session.loggedIn = false;
+  res.redirect('/');
+})
 
 
 app.listen(3000, function() { console.log("Cannonball runnin' at 3000"); });

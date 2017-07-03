@@ -1,10 +1,12 @@
 const express = require('express');
+const Sequelize = require('sequelize');
+const moment = require('moment');
 const router = express.Router();
 
 const models = require('../../models');
 // const expressSession = require('express-session');
 router.get('/', function(req, res) {
-  console.log(req.session);
+  // console.log(req.session);
   if (req.session.loggedIn) {
     models.messages.findAll({
       include: [
@@ -16,9 +18,19 @@ router.get('/', function(req, res) {
           model: models.likes,
           as: 'likes'
         }
-      ]
+      ],
+      order: Sequelize.col('createdAt','DESC')
     }).then(function(msgs) {
-      res.render('index', { messages: msgs, user: req.session.user, loggedIn: req.session.loggedIn });
+      let allMessages = msgs.map(function(obj, i) {
+        const time = moment(obj.createdAt).fromNow();
+        return {
+          message: obj.message,
+          createdAt:time,
+          user: obj.user,
+          likes: obj.likes
+        };
+      });
+      res.render('index', { messages: allMessages, user: req.session.user, loggedIn: req.session.loggedIn });
     });
   } else {
     res.redirect('/login');
