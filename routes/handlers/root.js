@@ -24,6 +24,7 @@ router.get('/', function(req, res) {
       let allMessages = msgs.map(function(obj, i) {
         const time = moment(obj.createdAt).fromNow();
         return {
+          id: obj.id,
           message: obj.message,
           createdAt:time,
           user: obj.user,

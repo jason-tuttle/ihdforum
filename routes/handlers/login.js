@@ -25,7 +25,7 @@ router.post('/login', function(req, res) {
             if (user) {  // if findOne() returned something not NULL
               if (password === user.password) { // check if the passwords match
                 req.session.loggedIn = true;  // set session variable to true if so
-                req.session.user = {name: username, id: user.id };
+                req.session.user = {name: username, displayname: user.displayname, id: user.id };
                 res.redirect('/');  // and redirect to '/'
               } else {
                 res.render('login', {error: [{msg: 'username and password don\'t match'}], loggedIn: req.session.loggedIn});

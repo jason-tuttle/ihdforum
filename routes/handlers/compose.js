@@ -7,7 +7,7 @@ router.get('/compose', function(req, res) {
   if (!req.session.loggedIn) {
     res.redirect('/login');
   } else {
-    res.render('compose', {user: req.session.user});
+    res.render('compose', {user: req.session.user, loggedIn: req.session.loggedIn});
   }
 });
 

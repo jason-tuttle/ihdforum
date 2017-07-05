@@ -4,24 +4,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>bbs2k17! Compose New Message</title>
+    <title>BBS2k17!</title>
     <link rel="stylesheet" href="../resources/css/styles.css">
   </head>
   <body>
     <header>
-      <div class="header logo"><a href="http://localhost:3000/">bbs2k17!</a></div>
+      <div class="header logo">bbs2k17!</div>
       <div class="header"><a href="http://localhost:3000/compose">create a new message</a></div>
       <div class="header">logged in as {{user.name}}</div>
       {{#loggedIn}}<div class="header"><a href="http://localhost:3000/logout">log out</a></div>{{/loggedIn}}
     </header>
-    <form class="message-form" id="new-message" action="/compose" method="post">
-      <textarea form="new-message" name="messageBody" value="" cols="60" maxlength="140" rows="3" autofocus>What are we talking about?</textarea><br>
-      <button type="submit" form="new-message" name="button">Post</button>
-    </form>
-    <div class="error-message">
-      {{#error}}
-        {{msg}}
-      {{/error}}
+    <div class="messages-container">
+        <div class="msg-container">
+
+            <p class="msg-body">{{message.message}}</p>
+            <p class="msg-attr auth">Written by: {{message.user}}</p>
+            <p class="msg-attr date">{{message.createdAt}}</p>
+            <p class="msg-attr likes">{{likes.length}} likes so far:<br>
+              {{#likes}}
+                <span class="msg-attr like-name">{{user.displayname}}</span><br>
+              {{/likes}}
+            </p>
+          
+        </div>
+
     </div>
   </body>
 </html>

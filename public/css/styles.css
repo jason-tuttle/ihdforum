@@ -6,17 +6,26 @@ body {
   font-family: monospace;
 }
 
-a:link {
+a:link, a:visited {
   color: darkgreen;
 }
 
 header {
   display: flex;
   flex-flow: row nowrap;
+  justify-content: flex-start;
+  text-align: center;
+  margin: 10px 0;
 }
 .header {
-  margin: 0 5px;
+  margin: 0;
+  padding: 0 5px;
   flex:auto;
+  border-left: 2px solid black;
+  border-collapse: collapse;
+}
+.logo {
+  font-size: 2em;
 }
 /*.messages-container {}*/
 
@@ -27,6 +36,9 @@ header {
   display: flex;
   flex-flow: row wrap;
   border-bottom: 2px solid green;
+}
+.msg-container a:link {
+  text-decoration: none;
 }
 .msg-body {
   flex: 1 0 100%;
