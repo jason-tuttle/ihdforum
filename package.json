@@ -1,7 +1,7 @@
 {
   "name": "week-six-project",
   "version": "1.0.0",
-  "description": "Use Express and Sequelize to build a social network for students. This network, called \"Gabble,\" has users, public messages, and likes.",
+  "description": "Use Express and Sequelize to build a social network for students. This network, called \"BBS2k17,\" has users, public messages, and likes.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

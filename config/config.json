@@ -18,6 +18,7 @@
     "password": null,
     "database": "bbs_prod",
     "host": "127.0.0.1",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "loggin": false
   }
 }
