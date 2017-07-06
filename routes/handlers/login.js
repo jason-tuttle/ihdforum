@@ -11,7 +11,6 @@ router.get('/login', function(req, res) {
 
 // handle form submission
 router.post('/login', function(req, res) {
-  console.log(req.body);
   if (req.body.button === "signup") { // if user hits the signup button
     res.redirect('signup');           // send them to the signup page
   } else {                            // otherwise...
@@ -35,7 +34,6 @@ router.post('/login', function(req, res) {
             }
           });
       } else {
-        console.log(result.array());
         res.render('login', {error: result.array()[0], loggedIn: req.session.loggedIn});
       }
     });

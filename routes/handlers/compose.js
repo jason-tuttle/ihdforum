@@ -12,7 +12,6 @@ router.get('/compose', function(req, res) {
 });
 
 router.post('/compose', function(req, res) {
-  console.log(req.body);
   const { name, id } = req.session.user;
   req.checkBody('messageBody', 'not gonna post an empty message, yo!').notEmpty();
   req.checkBody('messageBody', 'BLAH BLAH BLAH too long!').isLength({min: 1, max: 140});

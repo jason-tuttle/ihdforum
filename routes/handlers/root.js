@@ -4,9 +4,8 @@ const moment = require('moment');
 const router = express.Router();
 
 const models = require('../../models');
-// const expressSession = require('express-session');
+
 router.get('/', function(req, res) {
-  // console.log(req.session);
   if (req.session.loggedIn) {
     models.messages.findAll({
       include: [
@@ -19,7 +18,7 @@ router.get('/', function(req, res) {
           as: 'likes'
         }
       ],
-      order: Sequelize.col('createdAt','DESC')
+      order: Sequelize.col('createdAt')
     }).then(function(msgs) {
       let allMessages = msgs.map(function(obj, i) {
         const time = moment(obj.createdAt).fromNow();
@@ -28,9 +27,11 @@ router.get('/', function(req, res) {
           message: obj.message,
           createdAt:time,
           user: obj.user,
-          likes: obj.likes
+          likes: obj.likes,
+          author: (obj.user.id === req.session.user.id)
         };
       });
+      // console.log(allMessages);
       res.render('index', { messages: allMessages, user: req.session.user, loggedIn: req.session.loggedIn });
     });
   } else {
@@ -38,8 +39,38 @@ router.get('/', function(req, res) {
   }
 });
 
-router.post('/', function(req, res) {
-  res.send('root post')
+router.post('/delete/:id', function(req, res) {
+  models.messages.find({
+    where: {id: req.params.id},
+    include: [
+      {
+        model: models.users,
+        as: 'user',
+        attributes: {exclude: ['password']}
+      },
+      {
+        model: models.likes,
+        as: 'likes',
+        include: [{
+          model: models.users,
+          as: 'user',
+          attributes: {exclude: ['password']}
+        }]
+      }
+    ]
+  }).then(function(record) {
+    record.destroy();
+    res.redirect('/');
+  });
+});
+
+router.post('/like/:id', function(req, res) {
+  models.likes.create({
+    userId: req.session.user.id,
+    messageId: req.params.id
+  }).then(function(record) {
+    res.redirect('/');
+  });
 });
 
 

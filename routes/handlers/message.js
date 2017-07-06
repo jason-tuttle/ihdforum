@@ -4,9 +4,8 @@ const moment = require('moment');
 const router = express.Router();
 
 const models = require('../../models');
-// const expressSession = require('express-session');
+
 router.get('/message/:id', function(req, res) {
-  // console.log(req.session);
   if (req.session.loggedIn) {
     models.messages.find({
       where: {id: req.params.id},
@@ -32,7 +31,6 @@ router.get('/message/:id', function(req, res) {
         user: msg.user.displayname,
         createdAt: moment(msg.createdAt).fromNow(),
       };
-      console.log(theMessage);
       res.render('message', { message: theMessage, likes: msg.likes, loggedIn: req.session.loggedIn });
     });
   } else {
