@@ -1,31 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Bungee+Inline|Numans');
+
 body {
   margin: 0;
   padding: 1vh 1vw;
   background-color: darkgray;
   color: white;
-  font-family: monospace;
+  font-family: 'Numans', Arial, Helvetica, sans-serif;
+  font-size: 2.5vw;
 }
 
 a:link, a:visited {
+  text-decoration: none;
   color: darkgreen;
 }
 
 header {
   display: flex;
-  flex-flow: row nowrap;
-  justify-content: flex-start;
-  text-align: center;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+
   margin: 10px 0;
+  /*height: 15vw;*/
 }
 .header {
   margin: 0;
   padding: 0 5px;
-  flex:auto;
-  border-left: 2px solid black;
+  flex: 0 1 auto;
   border-collapse: collapse;
+  height: 100%;
 }
 .logo {
-  font-size: 2em;
+  font-family: 'Bungee Inline', Arial, Helvetica, sans-serif;
+  font-size: 4em;
+  text-align: center;
+  flex: 1 0 100%;
 }
 /*.messages-container {}*/
 
@@ -33,22 +42,41 @@ header {
   margin: 0;
 }
 .msg-container {
+  margin: 10px 0;
   display: flex;
   flex-flow: row wrap;
   border-bottom: 2px solid green;
 }
 .msg-container a:link {
+  width: inherit;
   text-decoration: none;
+  width: 100%;
 }
 .msg-body {
   flex: 1 0 100%;
   background-color: white;
   color: black;
   padding: 10px 0;
+  font-size: 1em;
 }
 .msg-attr {
   flex:1 1 100%;
   background-color: lightgray;
   color: black;
   border-top: 1px dashed green;
+  font-size: 0.75em;
+}
+
+.like-name {
+  margin-left: 10px;
+}
+
+button {
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+form {
+  line-height: 1.5em;
 }

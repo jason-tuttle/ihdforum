@@ -38,6 +38,23 @@ router.get('/message/:id', function(req, res) {
   }
 });
 
+router.post('/message/:id/delete', function(req, res) {
+  models.likes.find({
+    where: {messageId: req.params.id},
+    include: [
+      {
+        model: models.messages,
+        as: 'message',
+      }
+    ]
+  }).then(function(likes) {
+    console.log(likes.toJSON());
+    likes.destroy();
+    likes.message.destroy();
+    res.redirect('/');
+  });
+});
+
 // router.post('/', function(req, res) {
 //   res.send('root post')
 // });

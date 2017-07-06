@@ -6,7 +6,7 @@ module.exports = function(sequelize, DataTypes) {
 
   likes.associate = function(models) {
     likes.belongsTo(models.users, { as:'user', foreignKey:'userId'});
-    likes.belongsTo(models.messages, {as:'message', foreignKey:'messageId'});
+    likes.belongsTo(models.messages, {as:'message', foreignKey:'messageId', onDelete: 'cascade'});
   }
 
   return likes;
