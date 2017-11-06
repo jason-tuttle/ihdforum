@@ -5,7 +5,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {});
   messages.associate = function(models) {
     messages.belongsTo(models.users, { as:'user', foreignKey:'userId' });
-    messages.hasMany(models.likes, { as:'likes', foreignKey:'messageId', onDelete: 'cascade'});
+    messages.hasMany(models.likes, { onDelete: 'cascade'});
   }
   return messages;
 };

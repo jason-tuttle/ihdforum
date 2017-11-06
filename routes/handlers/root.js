@@ -28,7 +28,6 @@ router.get('/', function(req, res) {
       let allMessages = msgs.map(function(obj, i) {
         const time = moment(obj.createdAt).fromNow();
         // console.log(obj.toJSON());
-        obj.likes.forEach
         const thisMsg = {
           id: obj.id,
           message: obj.message,
