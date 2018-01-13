@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      liked: {
-        type: Sequelize.BOOLEAN
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
