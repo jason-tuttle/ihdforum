@@ -27,7 +27,6 @@ app.use(function(req, res, next) {
     req.session.active = true;
     req.session.loggedIn = false;
     req.session.user = {};
-    // console.log(req.session);
   }
   next();
 });

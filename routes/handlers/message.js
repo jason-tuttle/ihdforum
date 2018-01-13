@@ -48,16 +48,9 @@ router.post('/message/:id/delete', function(req, res) {
       }
     ]
   }).then(function(message) {
-    // likes.destroy();
-    // message.likes.destroy();
     message.destroy();
     res.redirect('/');
   });
 });
-
-// router.post('/', function(req, res) {
-//   res.send('root post')
-// });
-
 
 module.exports = router;
