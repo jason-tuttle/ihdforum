@@ -8,7 +8,7 @@ module.exports = {
         table: 'messages',
         field: 'id'
       },
-      onDelete: 'cascade'
+      onDelete: 'CASCADE'
     });
   },
 
@@ -19,7 +19,7 @@ module.exports = {
         table: 'messages',
         field: 'id'
       },
-      onDelete: 'cascade'
+      onDelete: 'CASCADE'
     });
   }
 };

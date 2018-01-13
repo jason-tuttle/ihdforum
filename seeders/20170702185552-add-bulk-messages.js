@@ -6,11 +6,11 @@ module.exports = {
     [
       {
         message: 'This is the very first message, written as a test.',
-        userId: 1
+        userId: 3
       },
       {
         message: 'This is the very next message, also written as a test.',
-        userId: 1
+        userId: 3
       },
       {
         message: 'The very fact that we are here and alive today is a good sign.',
@@ -18,7 +18,7 @@ module.exports = {
       },
       {
         message: 'You totally stole that from Alex DeMots.',
-        userId: 2
+        userId: 4
       }
     ], {});
   },
