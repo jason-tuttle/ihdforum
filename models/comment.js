@@ -8,11 +8,11 @@ module.exports = function(sequelize, DataTypes) {
     {
       classMethods: {
         associate: function(models) {
-          comment.belongsTo(models.users, { as: 'user', foreignKey: 'userId' });
-          comment.belongsTo(models.messages, { as: 'message', foreignKey: 'messageId' });
+          comment.belongsTo(models.users);
+          // comment.belongsTo(models.messages);
         },
       },
     }
   );
-  return Comment;
+  return comment;
 };
