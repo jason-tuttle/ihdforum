@@ -28,7 +28,7 @@ router.get('/message/:id', function(req, res) {
             ],
           },
           {
-            model: models.comments,
+            model: models.comment,
             as: 'comments',
             include: [
               {
@@ -51,6 +51,27 @@ router.get('/message/:id', function(req, res) {
   } else {
     res.redirect('/login');
   }
+});
+
+router.post('/message/:id/comment', function(req, res) {
+  const { name, id } = req.session.user;
+  const messageId = req.params.id;
+  req.checkBody('commentBody', 'not gonna post an empty message, yo!').notEmpty();
+  req.checkBody('commentBody', 'BLAH BLAH BLAH too long!').isLength({ min: 1, max: 140 });
+  req.getValidationResult().then(function(result) {
+    if (result.isEmpty()) {
+      // true means no errors!
+      models.comment
+        .create({
+          messageId,
+          comment: req.body.commentBody,
+          userId: id,
+        })
+        .then(message => res.redirect('/'));
+    } else {
+      res.render('compose', { error: result.array()[0] });
+    }
+  });
 });
 
 router.delete('/message/:id/delete', function(req, res) {

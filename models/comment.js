@@ -9,7 +9,7 @@ module.exports = function(sequelize, DataTypes) {
       classMethods: {
         associate: function(models) {
           comment.belongsTo(models.users);
-          // comment.belongsTo(models.messages);
+          comment.belongsTo(models.messages);
         },
       },
     }
