@@ -15,19 +15,17 @@
       {{#loggedIn}}<div class="header"><a href="http://localhost:3100/logout">log out</a></div>{{/loggedIn}}
     </header>
     <div class="messages-container">
-        <div class="msg-container">
+      <div class="msg-container">
 
-            <p class="msg-body">{{message.message}}</p>
-            <p class="msg-attr auth">Written by: {{message.user}}</p>
-            <p class="msg-attr date">{{message.createdAt}}</p>
-            <p class="msg-attr likes">{{likes.length}} likes so far:<br>
-              {{#likes}}
-                <span class="msg-attr like-name">{{user.displayname}}</span><br>
-              {{/likes}}
-            </p>
-
-        </div>
-
+          <p class="msg-body">{{message.message}}</p>
+          <p class="msg-attr auth">Written by: {{message.user}}</p>
+          <p class="msg-attr date">{{message.createdAt}}</p>
+          <p class="msg-attr likes">{{likes.length}} likes so far:<br>
+            {{#likes}}
+              <span class="msg-attr like-name">{{user.displayname}}</span><br>
+            {{/likes}}
+          </p>
+      </div>
     </div>
   </body>
 </html>
