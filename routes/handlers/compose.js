@@ -18,12 +18,12 @@ router.post('/compose', function(req, res) {
   req.getValidationResult().then(function(result) {
     if (result.isEmpty()) {
       // true means no errors!
-      models.messages
+      models.Message
         .create({
           message: req.body.messageBody,
           userId: req.session.user.id,
         })
-        .then(message => res.redirect('/'));
+        .then(() => res.redirect('/'));
     } else {
       res.render('compose', { error: result.array()[0] });
     }

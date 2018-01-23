@@ -7,26 +7,26 @@ const models = require('../../models');
 
 router.get('/', function(req, res) {
   if (req.session.loggedIn) {
-    models.messages
+    models.Message
       .findAll({
         include: [
           {
-            model: models.users,
+            model: models.User,
             as: 'user',
           },
           {
-            model: models.likes,
+            model: models.Like,
             as: 'likes',
             include: [
               {
-                model: models.users,
+                model: models.User,
                 as: 'user',
                 attributes: { exclude: ['password'] },
               },
             ],
           },
           {
-            model: models.comment,
+            model: models.Comment,
             as: 'comments',
           },
         ],
@@ -55,7 +55,7 @@ router.get('/', function(req, res) {
 });
 
 router.post('/like/:id', function(req, res) {
-  models.likes
+  models.Like
     .findOrCreate({
       where: {
         userId: req.session.user.id,

@@ -17,17 +17,16 @@ router.post('/signup', function(req, res) {
   req.checkBody('password', 'please enter a password').notEmpty();
   req.getValidationResult().then(function(result) {
     if (result.isEmpty()) { // .isEmpty:true means no validation errors...
-      models.users.findOne({ where: {username: username}}) // check users table
+      models.User.findOne({ where: {username: username}}) // check users table
         .then(function(user) {
           if (user) {  // if findOne() returned something not NULL, username already exists
             res.render('signup', {error: [{msg: 'that username already exists! please choose a new one.'}]});
           } else {
-            models.users.create({
+            models.User.create({
               displayname: displayname,
               username: username,
               password: password
             }).then(function(user) {
-              console.log(user);
               req.session.loggedIn = true;
               req.session.user = {name: username, id: user.id};
               res.redirect('/');

@@ -7,32 +7,32 @@ const models = require('../../models');
 
 router.get('/message/:id', function(req, res) {
   if (req.session.loggedIn) {
-    models.messages
+    models.Message
       .find({
         where: { id: req.params.id },
         include: [
           {
-            model: models.users,
+            model: models.User,
             as: 'user',
             attributes: { exclude: ['password'] },
           },
           {
-            model: models.likes,
+            model: models.Like,
             as: 'likes',
             include: [
               {
-                model: models.users,
+                model: models.User,
                 as: 'user',
                 attributes: { exclude: ['password'] },
               },
             ],
           },
           {
-            model: models.comment,
+            model: models.Comment,
             as: 'comments',
             include: [
               {
-                model: models.users,
+                model: models.User,
                 as: 'user',
                 attributes: { exclude: ['password'] },
               },
