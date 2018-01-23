@@ -28,8 +28,8 @@
       </div>
     </div>
     <div class="form-container">
-      <form class="comment-form" id="new-comment" action="/message/{{message.id}}/comment" method="post">
-        <label for="body">Add a comment:</label><br>
+      <form class="comment-form" id="new-comment" action="/comment/{{message.messageId}}" method="post">
+        <label for="body">Add a comment for message {{message.messageId}}:</label><br>
         <textarea form="new-comment" id="body" name="commentBody" placeholder="Say something" cols="60" maxlength="140" rows="3" autofocus></textarea><br>
         <button type="submit" form="new-comment" name="button">Post</button>
       </form>

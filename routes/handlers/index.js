@@ -3,5 +3,6 @@ module.exports = {
   compose: require('./compose'),
   signup: require('./signup'),
   login: require('./login'),
-  message: require('./message')
-}
+  message: require('./message'),
+  comment: require('./comment')
+};

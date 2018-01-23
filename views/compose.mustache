@@ -12,7 +12,9 @@
       <div class="logo"><a href="http://localhost:3100/">bbs2k17!</a></div>
       <div class="header"><a href="http://localhost:3100/compose">create a new message</a></div>
       <div class="header">logged in as {{user.displayname}}</div>
-      {{#loggedIn}}<div class="header"><a href="http://localhost:3100/logout">log out</a></div>{{/loggedIn}}
+      {{#loggedIn}}
+        <div class="header"><a href="http://localhost:3100/logout">log out</a></div>
+      {{/loggedIn}}
     </header>
     <div class="form-container">
       <form class="message-form" id="new-message" action="/compose" method="post">

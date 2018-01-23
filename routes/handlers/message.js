@@ -8,8 +8,9 @@ const models = require('../../models');
 router.get('/message/:id', function(req, res) {
   if (req.session.loggedIn) {
     models.messages
-      .find({
+      .findOne({
         where: { id: req.params.id },
+        attributes: { include: ['id']},
         include: [
           {
             model: models.users,
@@ -40,9 +41,10 @@ router.get('/message/:id', function(req, res) {
           },
         ],
       })
-      .then(function(msg) {
+      .then(function(msg) {        
         const theMessage = {
           message: msg.message,
+          messageId: msg.id,
           user: msg.user.displayname,
           createdAt: moment(msg.createdAt).fromNow(),
         };
@@ -65,7 +67,7 @@ router.post('/message/:id/comment', function(req, res) {
   req.getValidationResult().then(function(result) {
     if (result.isEmpty()) {
       // true means no errors!
-      models.comment
+      models.comments
         .create({
           messageId,
           comment: req.body.commentBody,

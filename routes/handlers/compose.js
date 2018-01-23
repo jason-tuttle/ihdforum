@@ -18,7 +18,7 @@ router.post('/compose', function(req, res) {
   req.getValidationResult().then(function(result) {
     if (result.isEmpty()) {
       // true means no errors!
-      models.Message
+      models.messages
         .create({
           message: req.body.messageBody,
           userId: req.session.user.id,
