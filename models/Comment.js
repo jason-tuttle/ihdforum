@@ -1,18 +1,18 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var comment = sequelize.define(
-    'comment',
+  var Comment = sequelize.define(
+    'comments',
     {
       comment: DataTypes.STRING,
     },
     {
       classMethods: {
         associate: function(models) {
-          comment.belongsTo(models.users);
-          comment.belongsTo(models.messages);
+          Comment.belongsTo(models.users);
+          Comment.belongsTo(models.messages);
         },
       },
     }
   );
-  return comment;
+  return Comment;
 };
