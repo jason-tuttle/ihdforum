@@ -4,8 +4,9 @@ module.exports = function(sequelize, DataTypes) {
     message: DataTypes.STRING
   }, {});
   Message.associate = function(models) {
-    Message.belongsTo(models.User, { as:'user', foreignKey:'userId' });
-    Message.hasMany(models.Like, { as:'likes', foreignKey:'messageId', onDelete: 'cascade'});
-  }
+    Message.belongsTo(models.users, { as:'user', foreignKey:'userId' });
+    Message.hasMany(models.likes, { as:'likes', foreignKey:'messageId', onDelete: 'cascade'});
+    Message.hasMany(models.comments, { as:'comments', foreignKey:'messageId', onDelete:'cascade'});
+  };
   return Message;
 };

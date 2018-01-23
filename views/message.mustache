@@ -42,9 +42,9 @@
     <div class="comments-container">
       {{#comments}}
       <div class="comment-container">
-          <p class="comment-body">{{comment.comment}}</p>
-          <p class="comment-attr auth">Written by: {{comment.user}}</p>
-          <p class="comment-attr date">{{comment.createdAt}}</p>
+          <p class="comment-body">{{comment}}</p>
+          <p class="comment-attr auth">Written by: {{user.username}}</p>
+          <p class="comment-attr date">{{createdAt}}</p>
       </div>
       {{/comments}}
     </div>

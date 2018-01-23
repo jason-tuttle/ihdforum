@@ -7,32 +7,32 @@ const models = require('../../models');
 
 router.get('/message/:id', function(req, res) {
   if (req.session.loggedIn) {
-    models.Message
+    models.messages
       .find({
         where: { id: req.params.id },
         include: [
           {
-            model: models.User,
+            model: models.users,
             as: 'user',
             attributes: { exclude: ['password'] },
           },
           {
-            model: models.Like,
+            model: models.likes,
             as: 'likes',
             include: [
               {
-                model: models.User,
+                model: models.users,
                 as: 'user',
                 attributes: { exclude: ['password'] },
               },
             ],
           },
           {
-            model: models.Comment,
+            model: models.comments,
             as: 'comments',
             include: [
               {
-                model: models.User,
+                model: models.users,
                 as: 'user',
                 attributes: { exclude: ['password'] },
               },
@@ -46,7 +46,11 @@ router.get('/message/:id', function(req, res) {
           user: msg.user.displayname,
           createdAt: moment(msg.createdAt).fromNow(),
         };
-        res.render('message', { message: theMessage, likes: msg.likes, loggedIn: req.session.loggedIn });
+        res.render('message', { 
+          message: theMessage,
+          likes: msg.likes,
+          comments: msg.comments,
+          loggedIn: req.session.loggedIn });
       });
   } else {
     res.redirect('/login');
@@ -67,7 +71,7 @@ router.post('/message/:id/comment', function(req, res) {
           comment: req.body.commentBody,
           userId: id,
         })
-        .then(message => res.redirect('/'));
+        .then(() => res.redirect('/'));
     } else {
       res.render('compose', { error: result.array()[0] });
     }

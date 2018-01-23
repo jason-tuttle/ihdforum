@@ -36,7 +36,7 @@ app.use('/', bbsRouter);
 app.get('/logout', function(req, res) {
   req.session.loggedIn = false;
   res.redirect('/');
-})
+});
 
 
-app.listen(3100, function() { console.log("Cannonball runnin' at 3100"); });
+app.listen(3100, function() { console.log('Cannonball runnin\' at 3100'); });

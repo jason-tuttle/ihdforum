@@ -7,33 +7,33 @@ const models = require('../../models');
 
 router.get('/', function(req, res) {
   if (req.session.loggedIn) {
-    models.Message
+    models.messages
       .findAll({
         include: [
           {
-            model: models.User,
+            model: models.users,
             as: 'user',
           },
           {
-            model: models.Like,
+            model: models.likes,
             as: 'likes',
             include: [
               {
-                model: models.User,
+                model: models.users,
                 as: 'user',
                 attributes: { exclude: ['password'] },
               },
             ],
           },
           {
-            model: models.Comment,
+            model: models.comments,
             as: 'comments',
           },
         ],
         order: Sequelize.col('id'),
       })
       .then(function(msgs) {
-        let allMessages = msgs.map(function(obj, i) {
+        let allMessages = msgs.map(function(obj) {
           const time = moment(obj.createdAt).fromNow();
           const thisMsg = {
             id: obj.id,
@@ -62,9 +62,7 @@ router.post('/like/:id', function(req, res) {
         messageId: req.params.id,
       },
     })
-    .then(function(record) {
-      res.redirect('/');
-    });
+    .then(() => res.redirect('/'));
 });
 
 module.exports = router;
