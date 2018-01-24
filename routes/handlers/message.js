@@ -10,7 +10,7 @@ router.get('/message/:id', function(req, res) {
     models.messages
       .findOne({
         where: { id: req.params.id },
-        attributes: { include: ['id']},
+        attributes: { include: ['id'] },
         include: [
           {
             model: models.users,
@@ -41,18 +41,20 @@ router.get('/message/:id', function(req, res) {
           },
         ],
       })
-      .then(function(msg) {        
+      .then(function(msg) {
         const theMessage = {
           message: msg.message,
           messageId: msg.id,
           user: msg.user.displayname,
           createdAt: moment(msg.createdAt).fromNow(),
         };
-        res.render('message', { 
+        res.render('message', {
+          user: req.session.user,
           message: theMessage,
           likes: msg.likes,
           comments: msg.comments,
-          loggedIn: req.session.loggedIn });
+          loggedIn: req.session.loggedIn,
+        });
       });
   } else {
     res.redirect('/login');
