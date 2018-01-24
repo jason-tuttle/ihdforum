@@ -30,7 +30,7 @@ router.get('/', function(req, res) {
             as: 'comments',
           },
         ],
-        order: Sequelize.col('id'),
+        order: [['id', 'DESC']],
       })
       .then(function(msgs) {
         let allMessages = msgs.map(function(obj) {
@@ -55,14 +55,12 @@ router.get('/', function(req, res) {
 });
 
 router.post('/like/:id', function(req, res) {
-  models.Like
-    .findOrCreate({
-      where: {
-        userId: req.session.user.id,
-        messageId: req.params.id,
-      },
-    })
-    .then(() => res.redirect('/'));
+  models.Like.findOrCreate({
+    where: {
+      userId: req.session.user.id,
+      messageId: req.params.id,
+    },
+  }).then(() => res.redirect('/'));
 });
 
 module.exports = router;
