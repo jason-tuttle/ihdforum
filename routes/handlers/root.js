@@ -47,22 +47,11 @@ router.get('/', function(req, res) {
           };
           return thisMsg;
         });
-        res.render('index', { messages: allMessages, user: req.session.user, loggedIn: req.session.loggedIn });
+        res.status(200).json({ messages: allMessages, user: req.session.user, loggedIn: req.session.loggedIn });
       });
   } else {
-    res.redirect('/login');
+    res.json({ error: 'user not logged in' });
   }
-});
-
-router.post('/like/:id', function(req, res) {
-  models.likes
-    .findOrCreate({
-      where: {
-        userId: req.session.user.id,
-        messageId: req.params.id,
-      },
-    })
-    .then(() => res.redirect('/'));
 });
 
 module.exports = router;
