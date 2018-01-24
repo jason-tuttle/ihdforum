@@ -24,3 +24,5 @@ router.post('/comment/:id', function(req, res) {
     }
   });
 });
+
+module.exports = router;
