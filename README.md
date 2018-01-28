@@ -4,22 +4,22 @@
 
 ### API Endpoints
 
-**GET /**:
+**GET '/'**
 
 * retrieve all messages
 
-**POST /login**
+**POST '/login'**
 
 * log in a user
 
-**POST /message**
+**POST '/message'**
 
 * create a new message
 
-**POST /comment/:id**
+**POST '/comment/:id'**
 
 * add a comment to message (id)
 
-**POST /like/:id**
+**POST '/like/:id'**
 
-* 'like' the message as the current user
+* 'like' message (id) as the current user
