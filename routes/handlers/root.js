@@ -50,7 +50,7 @@ router.get('/', function(req, res) {
         res.status(200).json({ messages: allMessages, user: req.session.user, loggedIn: req.session.loggedIn });
       });
   } else {
-    res.json({ error: 'user not logged in' });
+    res.status(401).json({ error: 'user not logged in' });
   }
 });
 

@@ -31,16 +31,16 @@ router.post('/login', function(req, res) {
                 // check if the passwords match
                 req.session.loggedIn = true; // set session variable to true if so
                 req.session.user = { name: username, displayname: user.displayname, id: user.id };
-                res.status(200).json({ success: 'user logged in' });
+                res.status(200).json({ status: 'success', message: 'user logged in' });
               } else {
-                res.status(401).json({ error: "username and password don't match" });
+                res.status(401).json({ status: 'error', message: "username and password don't match" });
               }
             } else {
-              res.status(403).json({ error: 'username not found' });
+              res.status(404).json({ status: 'error', message: 'username not found' });
             }
           });
       } else {
-        res.status(400).json({ error: result.array() });
+        res.status(400).json({ status: 'error', message: result.array() });
       }
     });
   }

@@ -23,9 +23,9 @@ router.post('/compose', function(req, res) {
           message: req.body.messageBody,
           userId: req.session.user.id,
         })
-        .then(() => res.redirect('/'));
+        .then(comment => res.status(200).json({ status: 'success', message: comment }));
     } else {
-      res.render('compose', { error: result.array()[0] });
+      res.status(500).json({ status: 'error', message: result.array()[0] });
     }
   });
 });

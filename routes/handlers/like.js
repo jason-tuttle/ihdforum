@@ -2,11 +2,11 @@
 
 const express = require('express');
 const Sequelize = require('sequelize');
-const router = express.Router();
+const likeRouter = express.Router();
 
 const models = require('../../models');
 
-router.post('/like/:id', function(req, res) {
+likeRouter.post('/like/:id', function(req, res) {
   models.likes
     .findOrCreate({
       where: {
@@ -16,11 +16,12 @@ router.post('/like/:id', function(req, res) {
     })
     .then((like, created) => {
       if (created) {
-        res.status(201).json(('success': 'added like'), ('like': like));
+        res.status(201).json({ success: 'added like', like: like });
       } else {
-        res.status(200).jason(('success': 'already liked'));
+        res.status(200).json({ success: 'already liked' });
       }
-    });
+    })
+    .catch(error => res.status(500).json({ status: 'error', message: error }));
 });
 
-module.exports = router;
+module.exports = likeRouter;

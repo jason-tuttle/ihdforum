@@ -18,9 +18,9 @@ router.post('/comment/:id', function(req, res) {
           comment: req.body.commentBody,
           userId: id,
         })
-        .then(() => res.redirect(`/message/${messageId}`));
+        .then(comment => res.status(200).json({ status: 'success', message: comment }));
     } else {
-      res.render('/', { error: result.array()[0] });
+      res.status(500).json({ status: 'error', message: result.array()[0] });
     }
   });
 });

@@ -48,16 +48,19 @@ router.get('/message/:id', function(req, res) {
           user: msg.user.displayname,
           createdAt: moment(msg.createdAt).fromNow(),
         };
-        res.render('message', {
-          user: req.session.user,
-          message: theMessage,
-          likes: msg.likes,
-          comments: msg.comments,
-          loggedIn: req.session.loggedIn,
+        res.status(200).json({
+          status: 'success',
+          message: {
+            user: req.session.user,
+            message: theMessage,
+            likes: msg.likes,
+            comments: msg.comments,
+            loggedIn: req.session.loggedIn,
+          },
         });
       });
   } else {
-    res.redirect('/login');
+    res.status(400).json({ status: 'error', message: 'not logged in' });
   }
 });
 
@@ -75,9 +78,9 @@ router.post('/message/:id/comment', function(req, res) {
           comment: req.body.commentBody,
           userId: id,
         })
-        .then(() => res.redirect('/'));
+        .then(message => res.status(200).json({ status: 'success', message: message }));
     } else {
-      res.render('compose', { error: result.array()[0] });
+      res.status(500).json({ status: 'error', message: result.array()[0] });
     }
   });
 });
@@ -95,7 +98,7 @@ router.delete('/message/:id/delete', function(req, res) {
     })
     .then(function(message) {
       message.destroy();
-      res.redirect('/');
+      res.status(200).json({ status: 'success', message: 'disliked' });
     });
 });
 
