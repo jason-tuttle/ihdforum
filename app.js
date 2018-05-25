@@ -1,16 +1,32 @@
 const express = require('express');
 const path = require('path');
 const ihdRouter = require('./routes/ihdRouter');
-const mustacheExpress = require('mustache-express');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 const bodyParser = require('body-parser');
 var Sequelize = require('sequelize');
+var graphqlHTTP = require('express-graphql');
+var { buildSchema } = require('graphql');
 const app = express();
 
-app.engine('mustache', mustacheExpress());
-app.set('views', './views');
-app.set('view engine', 'mustache');
+var schema = buildSchema(`
+  type Query {
+    hello: String
+  }
+`);
+
+// The root provides a resolver function for each API endpoint
+var root = {
+  hello: () => {
+    return 'Hello world!';
+  },
+};
+
+app.use('/graphql', graphqlHTTP({
+  schema: schema,
+  rootValue: root,
+  graphiql: true,
+}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
