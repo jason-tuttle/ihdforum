@@ -37,6 +37,11 @@ const resolvers = {
       return comment.getUser();
     }
   },
+  Like: {
+    user(like) {
+      return like.getUser();
+    }
+  }
 };
 
 module.exports = resolvers;
