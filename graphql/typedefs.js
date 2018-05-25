@@ -25,10 +25,25 @@ const typeDefs = [`
     user: User!
     message: Message!
   }
+  
+  # *** INPUT TYPES ***
+  
   input CommentFilterInput {
     userId: String
     messageId: String
   }
+  input MessageInput {
+    message: String!
+    userId: ID!
+  }
+  input CommentInput {
+    comment: String!
+    userId: ID!
+    messageId: ID!
+  }
+  
+  # *** ROOT LEVEL TYPES ***
+  
   type Query {
     user(id: ID!): User
     message(id: ID!): Message
@@ -37,9 +52,14 @@ const typeDefs = [`
     comments(filter: CommentFilterInput): [Comment]
     likes: [Like]
   }
+  type Mutation {
+    addMessage(messageInput: MessageInput): Message
+    addComment(commentInput: CommentInput): Comment  
+  }
 
   schema {
     query: Query
+    mutation: Mutation
   }
 `];
 

@@ -21,6 +21,11 @@ const resolvers = {
       return models.likes.findAll({ where: args });
     },
   },
+  Mutation: {
+    addMessage(root, {messageInput}) {
+      return models.messages.create({message: messageInput.message, userId: messageInput.userId}).then(message => message);
+    }
+  },
   Message: {
     user(message) {
       return message.getUser();
