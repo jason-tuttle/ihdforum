@@ -1,6 +1,6 @@
 # IHD FORUM 20th Anniversary Edition
 
-### Use Express/Sequelize backed blogging REST API
+### Use Express/Sequelize/Apollo/GraphQL backed blogging API
 
 ### API Endpoints
 
