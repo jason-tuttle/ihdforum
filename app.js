@@ -1,32 +1,44 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
+const { makeExecutableSchema } = require('graphql-tools');
+
 const path = require('path');
 const ihdRouter = require('./routes/ihdRouter');
 const session = require('express-session');
 const expressValidator = require('express-validator');
-const bodyParser = require('body-parser');
+
 var Sequelize = require('sequelize');
-var graphqlHTTP = require('express-graphql');
-var { buildSchema } = require('graphql');
+
 const app = express();
 
-var schema = buildSchema(`
+var typeDefs = [`
   type Query {
     hello: String
+    goodbye: String
   }
-`);
+
+  schema {
+    query: Query
+  }
+`];
 
 // The root provides a resolver function for each API endpoint
-var root = {
-  hello: () => {
-    return 'Hello world!';
-  },
+var resolvers = {
+  Query: {
+    hello(root) {
+      return 'world';
+    },
+    goodbye(root) {
+      return 'cruel world!'
+    }
+  }
 };
 
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
-  graphiql: true,
-}));
+var schema = makeExecutableSchema({typeDefs, resolvers});
+
+app.use('/graphql', bodyParser.json(), graphqlExpress({schema}));
+app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
