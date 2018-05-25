@@ -21,6 +21,22 @@ const resolvers = {
       return models.likes.findAll({ where: args });
     },
   },
+  Message: {
+    user(message) {
+      return message.getUser();
+    },
+    likes(message) {
+      return message.getLikes();
+    },
+    comments(message) {
+      return message.getComments();
+    }
+  },
+  Comment: {
+    user(comment) {
+      return comment.getUser();
+    }
+  },
 };
 
 module.exports = resolvers;

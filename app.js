@@ -10,7 +10,7 @@ const expressValidator = require('express-validator');
 
 const app = express();
 
-const typeDefs = require('./graphql/typeDefs');
+const typeDefs = require('./graphql/typedefs');
 
 // The root provides a resolver function for each API endpoint
 const resolvers = require('./graphql/resolvers');
