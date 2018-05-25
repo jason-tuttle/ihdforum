@@ -4,12 +4,13 @@ const moment = require('moment');
 const router = express.Router();
 
 const models = require('../../models');
+const Op = Sequelize.Op;
 
 router.get('/message/:id', function(req, res) {
   if (req.session.loggedIn) {
     models.messages
       .findOne({
-        where: { id: req.params.id },
+        where: { id: {[Op.eq]: req.params.id} },
         attributes: { include: ['id'] },
         include: [
           {
@@ -88,7 +89,7 @@ router.post('/message/:id/comment', function(req, res) {
 router.delete('/message/:id/delete', function(req, res) {
   models.messages
     .find({
-      where: { id: req.params.id },
+      where: { id: { [Op.eq]: req.params.id } },
       include: [
         {
           model: models.likes,

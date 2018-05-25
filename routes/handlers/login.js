@@ -1,9 +1,12 @@
 'use strict';
 const express = require('express');
+const Sequelize = require('sequelize');
 const models = require('../../models');
 
 const loginApp = express();
 const router = express.Router();
+
+const Op = Sequelize.Op;
 
 router.get('/login', function(req, res) {
   res.render('login', { loggedIn: req.session.loggedIn });
@@ -23,7 +26,7 @@ router.post('/login', function(req, res) {
       if (result.isEmpty()) {
         // .isEmpty:true means no validation errors...
         models.users
-          .findOne({ where: { username: username } }) // check users table
+          .findOne({ where: { username: {[Op.eq]: username} } }) // check users table
           .then(function(user) {
             if (user) {
               // if findOne() returned something not NULL

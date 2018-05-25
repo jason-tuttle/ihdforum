@@ -5,13 +5,14 @@ const Sequelize = require('sequelize');
 const likeRouter = express.Router();
 
 const models = require('../../models');
+const Op = Sequelize.Op;
 
 likeRouter.post('/like/:id', function(req, res) {
   models.likes
     .findOrCreate({
       where: {
-        userId: req.session.user.id,
-        messageId: req.params.id,
+        userId:{ [Op.eq]: req.session.user.id },
+        messageId: { [Op.eq]: req.params.id },
       },
     })
     .then((like, created) => {

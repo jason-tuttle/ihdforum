@@ -4,6 +4,8 @@ const models = require('../../models');
 
 const signupApp = express();
 const router = express.Router();
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 
 router.get('/signup', function(req, res) {
   res.render('signup', { user: req.session.user });
@@ -18,7 +20,7 @@ router.post('/signup', function(req, res) {
   req.getValidationResult().then(function(result) {
     if (result.isEmpty()) {
       // .isEmpty:true means no validation errors...
-      models.User.findOne({ where: { username: username } }) // check users table
+      models.User.findOne({ where: { username: { [Op.eq]: username } } }) // check users table
         .then(function(user) {
           if (user) {
             // if findOne() returned something not NULL, username already exists
