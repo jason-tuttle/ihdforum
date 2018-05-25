@@ -1,41 +1,22 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress } = require('apollo-server-express');
-const { makeExecutableSchema } = require('graphql-tools');
+const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools');
 
 const path = require('path');
 const ihdRouter = require('./routes/ihdRouter');
 const session = require('express-session');
 const expressValidator = require('express-validator');
 
-var Sequelize = require('sequelize');
-
 const app = express();
 
-var typeDefs = [`
-  type Query {
-    hello: String
-    goodbye: String
-  }
-
-  schema {
-    query: Query
-  }
-`];
+const typeDefs = require('./graphql/typeDefs');
 
 // The root provides a resolver function for each API endpoint
-var resolvers = {
-  Query: {
-    hello(root) {
-      return 'world';
-    },
-    goodbye(root) {
-      return 'cruel world!'
-    }
-  }
-};
+const resolvers = require('./graphql/resolvers');
 
 var schema = makeExecutableSchema({typeDefs, resolvers});
+// addMockFunctionsToSchema({ schema, mocks });
 
 app.use('/graphql', bodyParser.json(), graphqlExpress({schema}));
 app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
