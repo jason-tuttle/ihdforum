@@ -1,29 +1,26 @@
-# BBS2k17!
-### recreating the early 2000's social web apps
+# IHD FORUM 20th Anniversary Edition
 
-This network has users, messages, comments, and likes.
+### Use Express/Sequelize/Apollo/GraphQL backed blogging API
 
-**Users** should:
+### API Endpoints
 
-* have a username and password for logging in
-* have a display name
+**GET '/'**
 
-**Messages** should:
-* be associated with a user who wrote them
+* retrieve all messages
 
-**Comments** should:
-* be associated with a user who wrote it
-* be associated with a Message
 
-**Likes** should:
-* be associated with a user who made the like and a message that was liked
+**POST '/login'**
 
-The application should have ways to do the following:
-* Sign up as a new user
-* Log in
-* Log out
-* View all messages with the newest first
-* Create a new message
-* Delete one of your own messages
-* Like a message
-* See who liked a message
+* log in a user
+
+**POST '/message'**
+
+* create a new message
+
+**POST '/comment/:id'**
+
+* add a comment to message (id)
+
+**POST '/like/:id'**
+
+* 'like' message (id) as the current user

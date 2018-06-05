@@ -1,42 +1,81 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const { graphqlExpress, graphiqlExpress, registerServer } = require('apollo-server-express');
+const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools');
+const { ApolloServer } = require('apollo-server');
+const typeDefs = require('./graphql/typedefs');
+const resolvers = require('./graphql/resolvers');
+
 const path = require('path');
-const bbsRouter = require('./routes/bbsRouter');
-const mustacheExpress = require('mustache-express');
+const ihdRouter = require('./routes/ihdRouter');
+const loginRoute = require('./routes/handlers/login');
 const session = require('express-session');
 const expressValidator = require('express-validator');
-const bodyParser = require('body-parser');
-var Sequelize = require('sequelize');
+const cors = require('cors');
+
 const app = express();
 
-app.engine('mustache', mustacheExpress());
-app.set('views', './views');
-app.set('view engine', 'mustache');
+// The root provides a resolver function for each API endpoint
 
-app.use(bodyParser.urlencoded({extended: true}));
+// var schema = makeExecutableSchema({typeDefs, resolvers});
+// addMockFunctionsToSchema({ schema, mocks });
+
+// app.use('/graphql',
+//   bodyParser.json(),
+//   graphqlExpress({ schema })
+// );
+//
+// app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(expressValidator());
+app.use('*', cors({ origin: 'http://localhost:3000'}))
 app.use('/resources', express.static(path.join(__dirname, 'public')));
 
-app.use(session({
-  secret: 'ford prefect',
-  resave: false,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: 'ford prefect',
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 600000 }
+  })
+);
 
 app.use(function(req, res, next) {
+  console.log('SESSION ACTIVE? : ', req.session.active);
+
   if (!req.session.active) {
+    console.log('resetting session')
     req.session.active = true;
-    req.session.loggedIn = false;
-    req.session.user = {};
+    req.session.users = [];
   }
   next();
 });
 
-app.use('/', bbsRouter);
+// app.use('/', ihdRouter);
+app.use('/', loginRoute);
 
 app.get('/logout', function(req, res) {
   req.session.loggedIn = false;
-  res.redirect('/');
+  res.status(200).json({status:'success', message:'logged out'});
 });
 
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  // context: function({req}) {
+  //   console.log('APOLLO REQUEST COOKIE:', req.session.cookie);
+  //   if (req.session.cookie.user) {
+  //     return req.session.cookie.user;
+  //   } else {
+  //     throw new Error('you must be logged in');
+  //   }
+  // }
+});
 
-app.listen(3100, function() { console.log('Cannonball runnin\' at 3100'); });
+registerServer({ server, app });
+
+app.listen(process.env.PORT || 3100, function() {
+  console.log("Cannonball runnin' at 3100");
+});
