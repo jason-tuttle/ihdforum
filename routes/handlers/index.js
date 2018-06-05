@@ -4,5 +4,6 @@ module.exports = {
   signup: require('./signup'),
   login: require('./login'),
   message: require('./message'),
-  comment: require('./comment')
+  comment: require('./comment'),
+  like: require('./like'),
 };

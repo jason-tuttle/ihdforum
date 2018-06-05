@@ -1,36 +1,26 @@
-### GABBLE :skull: is a terrible name
-# BBS2k17!
-## Use Express and Sequelize to build a social network
+# IHD FORUM 20th Anniversary Edition
 
-Use Express and Sequelize to build a social network for students. This network, called "Gabble," has users, public messages, and likes.
+### Use Express/Sequelize/Apollo/GraphQL backed blogging API
 
-**Users** should:
+### API Endpoints
 
-* have a username and password for logging in
-* have a display name
+**GET '/'**
 
-**Messages** should:
-* be associated with a user who wrote them
-* have up to 140 characters of text
+* retrieve all messages
 
-**Likes** should:
-* be associated with a user who made the like and a message that was liked
 
-The application should have ways to do the following:
-* Sign up as a new user
-* Log in
-* Log out
-* View all messages with the newest first
-* Create a new message
-* Delete one of your own messages
-* Like a message
-* See who liked a message
+**POST '/login'**
 
-This will require your knowledge of forms, validation, sessions, middleware, and Sequelize. You will likely have to look up some features of these.
+* log in a user
 
-You may want to consider running
-```bash
-sequelize seed:create
-```
+**POST '/message'**
 
-and create a new seed file that will create several users and gabs.
+* create a new message
+
+**POST '/comment/:id'**
+
+* add a comment to message (id)
+
+**POST '/like/:id'**
+
+* 'like' message (id) as the current user
