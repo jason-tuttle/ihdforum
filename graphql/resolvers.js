@@ -3,7 +3,7 @@ const models = require('../models');
 const resolvers = {
   Query: {
     user(root, args, context, info) {
-      return models.users.find({ where: args });
+      return models.users.find({ where: args, attributes: { exclude: ['password'] }, });
     },
     message(root, args, context, info) {
       return models.messages.find({ where: args });
@@ -22,8 +22,18 @@ const resolvers = {
     },
   },
   Mutation: {
-    addMessage(root, {messageInput}) {
-      return models.messages.create({message: messageInput.message, userId: messageInput.userId}).then(message => message);
+    addMessage(root, { messageInput }) {
+      return models.messages.create({
+        message: messageInput.message,
+        userId: messageInput.userId
+      }).then(message => message);
+    },
+    addComment(root, { commentInput }) {
+      return models.comments.create({ 
+        comment: commentInput.comment,
+        userId: commentInput.userId,
+        messageId: commentInput.messageId
+      }).then(comment => comment);
     }
   },
   Message: {
