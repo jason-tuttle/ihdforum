@@ -15,6 +15,15 @@ const cors = require('cors');
 
 const app = express();
 
+const { Client } = require('pg');
+
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: true,
+});
+
+client.connect();
+
 // The root provides a resolver function for each API endpoint
 
 // var schema = makeExecutableSchema({typeDefs, resolvers});
