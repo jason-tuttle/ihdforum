@@ -1,6 +1,7 @@
 {
   "name": "IHD-Forum",
   "version": "1.0.0",
+  "private": true,
   "description": "Old school IHD FORUM",
   "main": "app.js",
   "scripts": {
