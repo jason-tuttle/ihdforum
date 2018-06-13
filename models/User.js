@@ -3,7 +3,12 @@ module.exports = function(sequelize, DataTypes) {
   var User = sequelize.define('users', {
     username: DataTypes.STRING,
     password: DataTypes.STRING,
-    displayname: DataTypes.STRING
+    nickname: DataTypes.STRING,
+    email: DataTypes.STRING,
+    email_verified: DataTypes.BOOLEAN,
+    picture: DataTypes.STRING,
+    name: DataTypes.STRING,
+    user_id: DataTypes.STRING
   }, {});
   User.associate = function(models) {
     User.hasMany(models.messages, { as:'messages', foreignKey:'userId'});
