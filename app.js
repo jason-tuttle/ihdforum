@@ -15,14 +15,16 @@ const cors = require('cors');
 
 const app = express();
 
-const { Client } = require('pg');
+if (process.env.PWD !== '/Users/jasontuttle/Developer/ihdforum') {
+  const { Client } = require('pg');
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
-});
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+  });
 
-client.connect();
+  client.connect();
+}
 
 // The root provides a resolver function for each API endpoint
 
@@ -73,14 +75,10 @@ app.get('/logout', function(req, res) {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  // context: function({req}) {
-  //   console.log('APOLLO REQUEST COOKIE:', req.session.cookie);
-  //   if (req.session.cookie.user) {
-  //     return req.session.cookie.user;
-  //   } else {
-  //     throw new Error('you must be logged in');
-  //   }
-  // }
+  context: function({req}) {
+    console.log('APOLLO REQUEST HEADERS:', req.headers);
+    
+  }
 });
 
 registerServer({ server, app });
