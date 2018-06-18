@@ -12,6 +12,7 @@ const loginRoute = require('./routes/handlers/login');
 // const session = require('express-session');
 const expressValidator = require('express-validator');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 
 const app = express();
 
@@ -26,45 +27,12 @@ if (process.env.PWD !== '/Users/jasontuttle/Developer/ihdforum') {
   client.connect();
 }
 
-// The root provides a resolver function for each API endpoint
-
-// var schema = makeExecutableSchema({typeDefs, resolvers});
-// addMockFunctionsToSchema({ schema, mocks });
-
-// app.use('/graphql',
-//   bodyParser.json(),
-//   graphqlExpress({ schema })
-// );
-//
-// app.use('/graphiql', graphiqlExpress({endpointURL: '/graphql'}));
-
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(expressValidator());
 app.use('*', cors({ origin: 'http://localhost:3000'}))
 app.use('/resources', express.static(path.join(__dirname, 'public')));
 
-// app.use(
-//   session({
-//     secret: 'ford prefect',
-//     resave: false,
-//     saveUninitialized: false,
-//     cookie: { maxAge: 600000 }
-//   })
-// );
-
-// app.use(function(req, res, next) {
-//   console.log('SESSION ACTIVE? : ', req.session.active);
-// 
-//   if (!req.session.active) {
-//     console.log('resetting session')
-//     req.session.active = true;
-//     req.session.users = [];
-//   }
-//   next();
-// });
-
-// app.use('/', ihdRouter);
 app.use('/', loginRoute);
 
 app.get('/logout', function(req, res) {
@@ -77,7 +45,14 @@ const server = new ApolloServer({
   resolvers,
   context: function({req}) {
     console.log('APOLLO REQUEST HEADERS:', req.headers);
-    
+    if (req.headers.authorization) {
+      const parts = req.headers.authorization.split('');
+      const token = parts[1];
+      const user = jwt.decode(token);
+      console.log(user);
+    } else {
+      throw new Error('you must be logged in.');
+    }
   }
 });
 
