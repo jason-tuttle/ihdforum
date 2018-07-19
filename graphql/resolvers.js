@@ -4,7 +4,8 @@ const Users = require('../models/Users');
 const resolvers = {
   Query: {
     user(root, args, context, info) {
-      return models.users.find({ where: args, attributes: { exclude: ['password'] }, });
+      // return models.users.find({ where: args, attributes: { exclude: ['password'] }, });
+      return Users.getUser(args);
     },
     message(root, args, context, info) {
       return models.messages.find({ where: args });
