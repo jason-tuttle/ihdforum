@@ -1,4 +1,5 @@
 const models = require('../models');
+const Users = require('../models/Users');
 
 const resolvers = {
   Query: {
@@ -29,7 +30,7 @@ const resolvers = {
       }).then(message => message);
     },
     addComment(root, { commentInput }) {
-      return models.comments.create({ 
+      return models.comments.create({
         comment: commentInput.comment,
         userId: commentInput.userId,
         messageId: commentInput.messageId
