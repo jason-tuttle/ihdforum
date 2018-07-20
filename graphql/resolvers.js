@@ -1,5 +1,5 @@
 const models = require('../models');
-// const Users = require('../models/Users');
+const UserAPI = require('./user-datasource');
 const fetch = require('node-fetch');
 const tokens = require('../data/tokens');
 const baseUrl = 'https://jason-tuttle.auth0.com/api/v2/';
@@ -27,10 +27,8 @@ const getUser = function(id) {
 
 const resolvers = {
   Query: {
-    user(root, args, context, info) {
-      console.log(args);
-      // return models.users.find({ where: args, attributes: { exclude: ['password'] }, });
-      return getUser(args);
+    user: async (root, { id }, { dataSources }) => {
+      return await dataSources.userAPI.getUser(id);
     },
     message(root, args, context, info) {
       return models.messages.find({ where: args });

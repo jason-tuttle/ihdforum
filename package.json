@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/jason-tuttle/ihdforum.git#readme",
   "dependencies": {
+    "apollo-datasource-rest": "0.1.0-rc.12",
     "apollo-server": "^2.0.0-beta.2",
     "apollo-server-express": "^2.0.0-beta.1",
     "body-parser": "^1.18.3",

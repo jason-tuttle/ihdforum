@@ -5,7 +5,7 @@ const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tool
 const { ApolloServer } = require('apollo-server');
 const typeDefs = require('./graphql/typedefs');
 const resolvers = require('./graphql/resolvers');
-
+const UserAPI = require('./graphql/user-datasource');
 const path = require('path');
 const ihdRouter = require('./routes/ihdRouter');
 const loginRoute = require('./routes/handlers/login');
@@ -43,6 +43,11 @@ app.get('/logout', function(req, res) {
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  dataSources: () => {
+    return {
+      userAPI: new UsersAPI(),
+    }
+  },
   context: function({req}) {
     if (req.headers.authorization) {
       const parts = req.headers.authorization.split('');
@@ -51,6 +56,7 @@ const server = new ApolloServer({
     } else {
       throw new Error('you must be logged in.');
     }
+    return req;
   }
 });
 
