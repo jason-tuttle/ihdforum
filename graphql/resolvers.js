@@ -1,11 +1,36 @@
 const models = require('../models');
-const Users = require('../models/Users');
+// const Users = require('../models/Users');
+const fetch = require('node-fetch');
+const tokens = require('../data/tokens');
+const baseUrl = 'https://jason-tuttle.auth0.com/api/v2/';
+
+const getUsers = function() {
+  const url = baseUrl + 'users';
+  const headers = { authorization: `Bearer ${tokens.acces_token}` };
+  return fetch(url, {
+    method: 'GET',
+    headers,
+  })
+    .then(res => res.json());
+}
+
+const getUser = function(id) {
+  const url = `${baseUrl}users/${id}`;
+  const headers = { authorization: `Bearer ${tokens.acces_token}` };
+  return fetch(url, {
+    method: 'GET',
+    headers,
+  })
+    .then(res => res.json());
+}
+
 
 const resolvers = {
   Query: {
     user(root, args, context, info) {
+      console.log(args);
       // return models.users.find({ where: args, attributes: { exclude: ['password'] }, });
-      return Users.getUser(args);
+      return getUser(args);
     },
     message(root, args, context, info) {
       return models.messages.find({ where: args });
@@ -40,7 +65,9 @@ const resolvers = {
   },
   Message: {
     user(message) {
-      return message.getUser();
+      console.log('*** MESSAGE:', message);
+      // return message.getUser();
+      return getUser(message.userId);
     },
     likes(message) {
       return message.getLikes();
@@ -51,12 +78,14 @@ const resolvers = {
   },
   Comment: {
     user(comment) {
-      return comment.getUser();
+      // return comment.getUser();
+      return getUser(message.userId);
     }
   },
   Like: {
     user(like) {
-      return like.getUser();
+      // return like.getUser();
+      return getUser(message.userId);
     }
   }
 };

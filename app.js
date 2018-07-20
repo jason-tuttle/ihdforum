@@ -44,12 +44,10 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: function({req}) {
-    console.log('APOLLO REQUEST HEADERS:', req.headers);
     if (req.headers.authorization) {
       const parts = req.headers.authorization.split('');
       const token = parts[1];
       const user = jwt.decode(token);
-      console.log(user);
     } else {
       throw new Error('you must be logged in.');
     }
