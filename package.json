@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "watch": "nodemon app.js",
-    "rebuild": "dropdb ihdforum; createdb ihdforum; sequelize db:migrate; sequelize db:seed:all"
+    "rebuild": "dropdb ihdforum && createdb ihdforum && sequelize db:migrate && sequelize db:seed:all"
   },
   "repository": {
     "type": "git",

@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress, registerServer } = require('apollo-server-express');
 const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools');
 const { ApolloServer } = require('apollo-server');
+// const { RESTDataSource } = require('apollo-datasource-rest');
 const typeDefs = require('./graphql/typedefs');
 const resolvers = require('./graphql/resolvers');
 const UserAPI = require('./graphql/user-datasource');
@@ -13,6 +14,7 @@ const loginRoute = require('./routes/handlers/login');
 const expressValidator = require('express-validator');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const tokens = require('./data/tokens');
 
 const app = express();
 
@@ -40,24 +42,40 @@ app.get('/logout', function(req, res) {
   res.status(200).json({status:'success', message:'logged out'});
 });
 
+// class UserAPI extends RESTDataSource {
+//   constructor() {
+//     super();
+//     this.baseURL = 'https://jason-tuttle.auth0.com/api/v2/';
+//   }
+//
+//   // willSendRequest(request) {
+//   //   request.headers.set('Authorization', this.context.token);
+//   // }
+//
+//   async getUser(id) {
+//     console.log('getting User...');
+//     return await this.get(`users/${id}`);
+//   }
+//
+//   async getUsers() {
+//     return await this.get('users/');
+//   }
+// }
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  dataSources: () => {
-    return {
-      userAPI: new UsersAPI(),
-    }
-  },
-  context: function({req}) {
-    if (req.headers.authorization) {
-      const parts = req.headers.authorization.split('');
-      const token = parts[1];
-      const user = jwt.decode(token);
-    } else {
+  context: (data) => {
+    if (!data.req.headers.authorization) {
       throw new Error('you must be logged in.');
     }
-    return req;
-  }
+    return {
+      ...data,
+      dataSources: {
+          userAPI: new UserAPI(),
+        }
+    };
+  },
 });
 
 registerServer({ server, app });

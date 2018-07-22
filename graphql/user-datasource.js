@@ -1,5 +1,4 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
-const tokens = require('../data/tokens');
 
 class UserAPI extends RESTDataSource {
   constructor() {
@@ -7,13 +6,17 @@ class UserAPI extends RESTDataSource {
     this.baseURL = 'https://jason-tuttle.auth0.com/api/v2/';
   }
 
-  willSendRequest(request) {
-    request.headers.set('Authorization', this.context.token);
-  }
+  // willSendRequest(request) {
+  //   request.headers.set('Authorization', this.context.token);
+  // }
 
   async getUser(id) {
-    const headers = { authorization: `Bearer ${tokens.acces_token}` };
-    return this.get(`users/${id}`, headers);
+    console.log('getting User...');
+    return this.get(`users/${id}`);
+  }
+
+  async getUsers() {
+    return this.get('users/');
   }
 
 }
