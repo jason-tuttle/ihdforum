@@ -7,8 +7,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "watch": "nodemon app.js",
-    "rebuild": "dropdb ihdforum && createdb ihdforum && sequelize db:migrate && sequelize db:seed:all"
+    "watch": "nodemon src/app.js --exec babel-node",
+    "rebuild": "dropdb ihdforum && createdb ihdforum && sequelize db:migrate && sequelize db:seed:all",
+    "build": "babel src -d dist",
+    "serve": "node dist/app.js"
   },
   "repository": {
     "type": "git",
@@ -42,6 +44,8 @@
     "sequelize": "^4.37.9"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "prettier-eslint-cli": "^4.7.1"
   }
 }
