@@ -6,9 +6,10 @@ class UserAPI extends RESTDataSource {
     this.baseURL = 'https://jason-tuttle.auth0.com/api/v2/';
   }
 
-  // willSendRequest(request) {
-  //   request.headers.set('Authorization', this.context.token);
-  // }
+  willSendRequest(request) {
+    const token = this.context.token.access_token;
+    request.headers.set('Authorization', `Bearer ${token}`);
+  }
 
   async getUser(id) {
     console.log('getting User...');

@@ -1,34 +1,12 @@
 const models = require('../models');
 const UserAPI = require('./user-datasource');
 const fetch = require('node-fetch');
-const tokens = require('../data/tokens');
+
 const baseUrl = 'https://jason-tuttle.auth0.com/api/v2/';
-
-// const getUsers = async function() {
-//   const url = baseUrl + 'users';
-//   const headers = { authorization: `Bearer ${tokens.acces_token}` };
-//   return await fetch(url, {
-//     method: 'GET',
-//     headers,
-//   })
-//     .then(res => res.json());
-// }
-
-// const getUser = function(id) {
-//   const url = `${baseUrl}users/${id}`;
-//   const headers = { authorization: `Bearer ${tokens.acces_token}` };
-//   return fetch(url, {
-//     method: 'GET',
-//     headers,
-//   })
-//     .then(res => res.json());
-// }
-
 
 const resolvers = {
   Query: {
     async user(root, { user_id }, context) {
-      console.log('#####CONTEXT:', context);
       return await context.dataSources.userAPI.getUser(user_id);
     },
     async users(root, _, { dataSources }) {
@@ -67,9 +45,7 @@ const resolvers = {
   },
   Message: {
     user(message, args, { dataSources }) {
-      console.log('***** MESSAGE', message);
-      console.log('***** ARGS', args);
-      return dataSources.getUser(message.user);
+      return dataSources.userAPI.getUser(message.user);
       // return getUser(message.user);
     },
     likes(message) {
@@ -91,15 +67,15 @@ const resolvers = {
     }
   },
   Comment: {
-    user(comment) {
+    user(comment, _, { dataSources }) {
       // return comment.getUser();
-      return comment.getUser(comment.user);
+      return dataSources.userAPI.getUser(comment.user);
     }
   },
   Like: {
-    user(like) {
+    user(like, _, { dataSources }) {
       // return like.getUser();
-      return like.getUser(like.user);
+      return dataSources.userAPI.getUser(like.user);
     }
   }
 };
