@@ -16,6 +16,8 @@ const loginRoute = require('../routes/handlers/login');
 
 const app = express();
 
+let access_token;
+
 const getAccessToken = async function() {
   const now = Date.now();
   const credentials = {
