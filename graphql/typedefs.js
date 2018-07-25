@@ -7,9 +7,10 @@ const typeDefs = [`
     comments: [Comment]
   }
   type User {
-    id: String!
-    username: String
-    displayname: String
+    user_id: ID!
+    nickname: String
+    name: String
+    picture: String
     messages: [Message]
     comments: [Comment]
     likes: [Like]
@@ -22,30 +23,31 @@ const typeDefs = [`
   }
   type Like {
     id: String!
-    user: User!
+    user: User
     message: Message!
   }
-  
+
   # *** INPUT TYPES ***
-  
+
   input CommentFilterInput {
-    userId: String
+    user: String!
     messageId: String
   }
   input MessageInput {
     message: String!
-    userId: ID!
+    user: String!
   }
   input CommentInput {
     comment: String!
-    userId: ID!
+    user: String!
     messageId: ID!
   }
-  
+
   # *** ROOT LEVEL TYPES ***
-  
+
   type Query {
-    user(id: ID!): User
+    user(user_id: String!): User
+    users: [User]
     message(id: ID!): Message
     messages: [Message]
     comment(id: ID!): Comment
@@ -54,7 +56,7 @@ const typeDefs = [`
   }
   type Mutation {
     addMessage(messageInput: MessageInput): Message
-    addComment(commentInput: CommentInput): Comment  
+    addComment(commentInput: CommentInput): Comment
   }
 
   schema {

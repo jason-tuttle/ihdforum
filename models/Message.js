@@ -1,10 +1,10 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Message = sequelize.define('messages', {
-    message: DataTypes.STRING
+    message: DataTypes.STRING,
+    user: DataTypes.STRING,
   }, {});
   Message.associate = function(models) {
-    Message.belongsTo(models.users, { as:'user', foreignKey:'userId' });
     Message.hasMany(models.likes, { as:'likes', foreignKey:'messageId', onDelete: 'cascade'});
     Message.hasMany(models.comments, { as:'comments', foreignKey:'messageId', onDelete:'cascade'});
   };

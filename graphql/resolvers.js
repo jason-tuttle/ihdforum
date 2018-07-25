@@ -1,9 +1,16 @@
 const models = require('../models');
+const UserAPI = require('./user-datasource');
+const fetch = require('node-fetch');
+
+const baseUrl = 'https://jason-tuttle.auth0.com/api/v2/';
 
 const resolvers = {
   Query: {
-    user(root, args, context, info) {
-      return models.users.find({ where: args, attributes: { exclude: ['password'] }, });
+    async user(root, { user_id }, { dataSources }) {
+      return await dataSources.userAPI.getUser(user_id);
+    },
+    async users(root, _, { dataSources }) {
+      return await dataSources.userAPI.getUsers();
     },
     message(root, args, context, info) {
       return models.messages.find({ where: args });
@@ -25,20 +32,21 @@ const resolvers = {
     addMessage(root, { messageInput }) {
       return models.messages.create({
         message: messageInput.message,
-        userId: messageInput.userId
+        user: messageInput.user
       }).then(message => message);
     },
     addComment(root, { commentInput }) {
-      return models.comments.create({ 
+      return models.comments.create({
         comment: commentInput.comment,
-        userId: commentInput.userId,
+        user: commentInput.user,
         messageId: commentInput.messageId
       }).then(comment => comment);
     }
   },
   Message: {
-    user(message) {
-      return message.getUser();
+    user(message, args, { dataSources }) {
+      return dataSources.userAPI.getUser(message.user);
+      // return getUser(message.user);
     },
     likes(message) {
       return message.getLikes();
@@ -47,14 +55,27 @@ const resolvers = {
       return message.getComments();
     }
   },
+  User: {
+    messages(user) {
+      return user.getMessages();
+    },
+    comments(user) {
+      return user.getComments();
+    },
+    likes(user) {
+      return user.getLikes();
+    }
+  },
   Comment: {
-    user(comment) {
-      return comment.getUser();
+    user(comment, _, { dataSources }) {
+      // return comment.getUser();
+      return dataSources.userAPI.getUser(comment.user);
     }
   },
   Like: {
-    user(like) {
-      return like.getUser();
+    user(like, _, { dataSources }) {
+      // return like.getUser();
+      return dataSources.userAPI.getUser(like.user);
     }
   }
 };
