@@ -12,7 +12,6 @@ class UserAPI extends RESTDataSource {
   }
 
   async getUser(id) {
-    console.log('getting User...');
     return this.get(`users/${id}`);
   }
 

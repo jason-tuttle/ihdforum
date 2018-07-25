@@ -6,8 +6,8 @@ const baseUrl = 'https://jason-tuttle.auth0.com/api/v2/';
 
 const resolvers = {
   Query: {
-    async user(root, { user_id }, context) {
-      return await context.dataSources.userAPI.getUser(user_id);
+    async user(root, { user_id }, { dataSources }) {
+      return await dataSources.userAPI.getUser(user_id);
     },
     async users(root, _, { dataSources }) {
       return await dataSources.userAPI.getUsers();
