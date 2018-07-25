@@ -14,21 +14,14 @@ const path = require('path');
 const ihdRouter = require('../routes/ihdRouter');
 const loginRoute = require('../routes/handlers/login');
 
-
 const app = express();
 
-let access_token;
-
 const getAccessToken = async function() {
-  let tokens = {};
-  if (process.env.NODE_ENV === 'development') {
-    tokens = require('../data/tokens');
-  }
   const now = Date.now();
   const credentials = {
-    grant_type: process.env.GRANT_TYPE || tokens.requestBody.grant_type,
-    client_id: process.env.CLIENT_ID || tokens.requestBody.client_id,
-    client_secret: process.env.CLIENT_SECRET || tokens.requestBody.client_secret,
+    grant_type: process.env.GRANT_TYPE,
+    client_id: process.env.CLIENT_ID,
+    client_secret: process.env.CLIENT_SECRET,
     audience: 'https://jason-tuttle.auth0.com/api/v2',
   };
 
