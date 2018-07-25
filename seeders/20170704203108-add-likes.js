@@ -4,20 +4,20 @@ module.exports = {
   up: function(queryInterface, Sequelize) {
     return queryInterface.bulkInsert('likes', [
       {
-        userId: 1,
+        user: 'auth0|5b154f2b157859716f2c1232',
         messageId: 1,
       },
       {
-        userId: 2,
+        user: 'google-oauth2|112109242494166402587',
         messageId: 1,
       },
       {
-        userId: 3,
+        user: 'twitter|62883362',
         messageId: 1,
       },
       {
-        userId: 4,
-        messageId: 1,
+        user: 'auth0|5b154f2b157859716f2c1232',
+        messageId: 2,
       },
     ]);
   },
