@@ -61,7 +61,7 @@ if (process.env.PWD !== '/Users/jasontuttle/Developer/ihdforum') {
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(expressValidator());
-app.use('*', cors({ origin: 'http://localhost:3000'}))
+app.use(cors());
 app.use('/resources', express.static(path.join(__dirname, 'public')));
 
 app.use('/', loginRoute);
