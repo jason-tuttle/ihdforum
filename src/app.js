@@ -21,10 +21,10 @@ let access_token;
 const getAccessToken = async function() {
   const now = Date.now();
   const credentials = {
-    grant_type: process.env.GRANT_TYPE,
+    grant_type: 'client_credentials',
     client_id: process.env.CLIENT_ID,
     client_secret: process.env.CLIENT_SECRET,
-    audience: 'https://jason-tuttle.auth0.com/api/v2',
+    audience: 'https://jason-tuttle.auth0.com/api/v2/',
   };
 
   // if access_token hasn't been set, or is expired...
@@ -91,5 +91,5 @@ const server = new ApolloServer({
 server.applyMiddleware({ app });
 
 app.listen(process.env.PORT || 3100, function() {
-  console.log("Cannonball runnin' at 3100");
+  console.log(`Cannonball runnin' on ${process.env.PORT || 3100}`);
 });
