@@ -21,7 +21,7 @@ const typeDefs = [`
     comment: String
     user: User
     message: Message
-    createdAt
+    createdAt: String
   }
   type Like {
     id: String!
