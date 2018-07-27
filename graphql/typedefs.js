@@ -5,7 +5,7 @@ const typeDefs = [`
     user: User
     likes: [Like]
     comments: [Comment]
-    createdAt
+    createdAt: String
   }
   type User {
     user_id: ID!
