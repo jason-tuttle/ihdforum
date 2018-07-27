@@ -8,6 +8,7 @@ class UserAPI extends RESTDataSource {
 
   willSendRequest(request) {
     const token = this.context.token.access_token;
+    console.log('SEND REQUEST', token);
     request.headers.set('Authorization', `Bearer ${token}`);
   }
 

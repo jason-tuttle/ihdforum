@@ -5,6 +5,7 @@ const typeDefs = [`
     user: User
     likes: [Like]
     comments: [Comment]
+    createdAt
   }
   type User {
     user_id: ID!
@@ -20,6 +21,7 @@ const typeDefs = [`
     comment: String
     user: User
     message: Message
+    createdAt
   }
   type Like {
     id: String!

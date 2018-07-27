@@ -1,5 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const { graphqlExpress, graphiqlExpress, ApolloServer } = require('apollo-server-express');
 const { makeExecutableSchema, addMockFunctionsToSchema } = require('graphql-tools');
 // const session = require('express-session');
@@ -13,22 +12,25 @@ const UserAPI = require('../graphql/user-datasource');
 const path = require('path');
 const ihdRouter = require('../routes/ihdRouter');
 const loginRoute = require('../routes/handlers/login');
+const tokens = require('../data/tokens');
 
 const app = express();
 
-let access_token;
+let access_token = null;
+
+console.log('Using ENV ' + process.env.NODE_ENV);
 
 const getAccessToken = async function() {
   const now = Date.now();
   const credentials = {
-    grant_type: process.env.GRANT_TYPE,
-    client_id: process.env.CLIENT_ID,
-    client_secret: process.env.CLIENT_SECRET,
+    grant_type: process.env.GRANT_TYPE || tokens.requestBody.grant_type,
+    client_id: process.env.CLIENT_ID || tokens.requestBody.client_id,
+    client_secret: process.env.CLIENT_SECRET || tokens.requestBody.client_secret,
     audience: 'https://jason-tuttle.auth0.com/api/v2',
   };
 
   // if access_token hasn't been set, or is expired...
-  if (!access_token || access_token.issued < now + 86400000) {
+  if (!access_token || access_token.issued + 86400000 < now) {
     try {
       const data = await fetch('https://jason-tuttle.auth0.com/oauth/token',
         {
@@ -42,6 +44,7 @@ const getAccessToken = async function() {
         access_token = Object.assign({}, data, { issued: Date.now() });
     } catch(error) {
       throw new Error(error);
+      access_token = null;
     }
   }
   return access_token;
@@ -58,7 +61,7 @@ if (process.env.PWD !== '/Users/jasontuttle/Developer/ihdforum') {
   client.connect();
 }
 
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(expressValidator());
 app.use(cors());
@@ -81,6 +84,7 @@ const server = new ApolloServer({
   },
   context: async (data) => {
     const token = await getAccessToken();
+    console.log('TOKEN', token);
     if (!data.req.headers.authorization) {
       throw new Error('you must be logged in.');
     }
@@ -90,6 +94,6 @@ const server = new ApolloServer({
 
 server.applyMiddleware({ app });
 
-app.listen(process.env.PORT || 3100, function() {
-  console.log("Cannonball runnin' at 3100");
+app.listen({port: process.env.PORT || 3100}, () => {
+  console.log(`Cannonball runnin' on port ${process.env.PORT || 3100}`);
 });

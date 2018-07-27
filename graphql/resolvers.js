@@ -1,8 +1,4 @@
 const models = require('../models');
-const UserAPI = require('./user-datasource');
-const fetch = require('node-fetch');
-
-const baseUrl = 'https://jason-tuttle.auth0.com/api/v2/';
 
 const resolvers = {
   Query: {
@@ -16,7 +12,7 @@ const resolvers = {
       return models.messages.find({ where: args });
     },
     messages(root, args, context, info) {
-      return models.messages.findAll({ where: args });
+      return models.messages.findAll({ where: {...args, order: ['createdAt', 'DESC']} });
     },
     comment(root, args, context, info) {
       return models.comments.find();
