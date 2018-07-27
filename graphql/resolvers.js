@@ -12,7 +12,7 @@ const resolvers = {
       return models.messages.find({ where: args });
     },
     messages(root, args, context, info) {
-      return models.messages.findAll({ where: args, order: ['createdAt', 'DESC']});
+      return models.messages.findAll({ where: args, order: [['createdAt', 'DESC']]});
     },
     comment(root, args, context, info) {
       return models.comments.find();

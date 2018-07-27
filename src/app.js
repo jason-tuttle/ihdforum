@@ -83,7 +83,6 @@ const server = new ApolloServer({
   },
   context: async (data) => {
     const token = await getAccessToken();
-    console.log('TOKEN', token);
     if (!data.req.headers.authorization) {
       throw new Error('you must be logged in.');
     }
