@@ -12,7 +12,6 @@ const UserAPI = require('../graphql/user-datasource');
 const path = require('path');
 const ihdRouter = require('../routes/ihdRouter');
 const loginRoute = require('../routes/handlers/login');
-const tokens = require('../data/tokens');
 
 const app = express();
 
