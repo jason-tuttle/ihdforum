@@ -37,6 +37,12 @@ const resolvers = {
         user: commentInput.user,
         messageId: commentInput.messageId
       }).then(comment => comment);
+    },
+    addLike(root, { likeInput }) {
+      return models.likes.create({
+        user: likeInput.user,
+        mesageId: likeInput.messageId
+      }).then(like => like);
     }
   },
   Message: {

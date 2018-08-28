@@ -44,6 +44,10 @@ const typeDefs = [`
     user: String!
     messageId: ID!
   }
+  input likeInput {
+    user: String!
+    messageId: ID!
+  }
 
   # *** ROOT LEVEL TYPES ***
 
